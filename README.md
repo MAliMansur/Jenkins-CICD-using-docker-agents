@@ -46,12 +46,12 @@ sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 sudo dnf install fontconfig java-21-openjdk 
 ```
 
-# If you are on amazon linux machine, use the following command to install java
+### If you are on amazon linux machine, use the following command to install java
 ```
  sudo amazon-linux-extras enable corretto11
  sudo yum install -y java-21-amazon-corretto
 ```
-# Verify Java is Installed, make sure the version of java should be latest and compatible with jenkins.
+### Verify Java is Installed, make sure the version of java should be latest and compatible with jenkins.
 ```
 java -version
 ```
@@ -64,16 +64,16 @@ sudo systemctl enable jenkins
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
-# Check if the jenkins is running on port 8080 or anything other than jenkins running on port 8080
+### Check if the jenkins is running on port 8080 or anything other than jenkins running on port 8080
 ```
 sudo netstat -tulnp | grep 8080
 ```
-# If there is some problem running the jenkins server, run the below commands
+### If there is some problem running the jenkins server, run the below commands
 ```
  sudo systemctl daemon-reload
  sudo systemctl start jenkins
 ```
- # To check the logs for jenkins, run the following commands
+### To check the logs for jenkins, run the following commands
  ```
  sudo cat /var/log/jenkins/jenkins.log
  sudo systemctl status jenkins
@@ -81,7 +81,7 @@ sudo netstat -tulnp | grep 8080
  sudo systemctl status jenkins -l
 ```
    
-# **Note: ** If you are on AWS By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
+### **Note: ** If you are on AWS By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
 
 - EC2 > Instances > Click on <Instance-ID>
 - In the bottom tabs -> Click on Security
@@ -96,13 +96,13 @@ sudo netstat -tulnp | grep 8080
 sudo ufw allow 8080
 sudo ufw reload
 ```
-# Also check the network connection is selected to bridged connection which you want to access the jenkins server from any browser other than the host
-# Also choose 
+### Also check the network connection is selected to bridged connection which you want to access the jenkins server from any browser other than the host
+### Also choose 
 
 ![image](https://github.com/user-attachments/assets/4a443ce5-dd62-4bf8-9744-81f05e708518)
-# Also go to virtual network editor change settings. 
+### Also go to virtual network editor change settings. 
 ![image](https://github.com/user-attachments/assets/36b0daac-1547-4e7c-a6ac-31d8a963d161)
-# Go to automatic settings and select the wireless or wifi adapter you are connected to and uncheck all other options
+### Go to automatic settings and select the wireless or wifi adapter you are connected to and uncheck all other options
 ![image](https://github.com/user-attachments/assets/20092713-896b-45e9-b52e-4eb3ed895cc1)
 
 
@@ -136,7 +136,7 @@ Jenkins Installation is Successful. You can now starting using the Jenkins
 
 <img width="990" alt="Screenshot 2023-02-01 at 11 14 13 AM" src="https://user-images.githubusercontent.com/43399466/215961440-3f13f82b-61a2-4117-88bc-0da265a67fa7.png">
 
-## Install the Docker Pipeline plugin in Jenkins:
+### Install the Docker Pipeline plugin in Jenkins:
 
    - Log in to Jenkins.
    - Go to Manage Jenkins > Manage Plugins.
@@ -149,7 +149,7 @@ Jenkins Installation is Successful. You can now starting using the Jenkins
 Wait for the Jenkins to be restarted.
 
 
-## Docker Slave Configuration
+### Docker Slave Configuration
 
 Run the below command to Install Docker
 
