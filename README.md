@@ -24,35 +24,62 @@ Install Jenkins, configure Docker as agent, set up cicd, deploy applications to 
 
 Pre-Requisites:
  - Java (JDK)
-
-### Run the below commands to install Java and Jenkins
-
-Install Java
+### Run the below commands to install Jenkins and java if you are on a ubuntu or debian machine
+```
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian/jenkins.io-2023.key
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt install fontconfig openjdk-21-jre
+sudo apt-get install jenkins
 
 ```
-sudo apt update
-sudo apt install openjdk-17-jre
+### Run the below commands to install Jenkins and java if you are on a redhat or fedora machine
+sudo yum update
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
+ sudo dnf upgrade
+# Add required dependencies for the jenkins package
+sudo dnf install fontconfig java-21-openjdk 
 ```
+```
+# If you are on amazon linux machine, use the following command to install java
+ sudo amazon-linux-extras enable corretto11
+ sudo yum install -y java-21-amazon-corretto
 
-Verify Java is Installed
-
+# Verify Java is Installed, make sure the version of java should be latest and compatible with jenkins.
 ```
 java -version
+
 ```
 
 Now, you can proceed with installing Jenkins
 
 ```
-curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
-  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-  https://pkg.jenkins.io/debian binary/ | sudo tee \
-  /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt-get update
-sudo apt-get install jenkins
-```
+sudo dnf install jenkins
 
-**Note: ** By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+```
+# Check if the jenkins is running on port 8080 or anything other than jenkins running on port 8080
+ sudo netstat -tulnp | grep 8080
+```
+```
+# If there is some problem running the jenkins server, run the below commands
+ sudo systemctl daemon-reload
+ sudo systemctl start jenkins
+
+ # To check the logs for jenkins, run the following commands
+  sudo cat /var/log/jenkins/jenkins.log
+   sudo systemctl status jenkins
+  ls /var/log/jenkins
+   sudo systemctl status jenkins -l
+
+   
+# **Note: ** If you are on AWS By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
 
 - EC2 > Instances > Click on <Instance-ID>
 - In the bottom tabs -> Click on Security
@@ -60,12 +87,26 @@ sudo apt-get install jenkins
 - Add inbound traffic rules as shown in the image (you can just allow TCP 8080 as well, in my case, I allowed `All traffic`).
 
 <img width="1187" alt="Screenshot 2023-02-01 at 12 42 01 PM" src="https://user-images.githubusercontent.com/43399466/215975712-2fc569cb-9d76-49b4-9345-d8b62187aa22.png">
+```
+
+### If you are on vmware or virtual machine, Jenkins will not be accessible to the external world due to the firewall restrictions of the port by the ubuntu os. Allow port 8080 in the firewall as show below.
+sudo ufw allow 8080
+sudo ufw reload
+
+# Also check the network connection is selected to bridged connection which you want to access the jenkins server from any browser other than the host
+# Also choose 
+
+![image](https://github.com/user-attachments/assets/4a443ce5-dd62-4bf8-9744-81f05e708518)
+# Also go to virtual network editor change settings. 
+![image](https://github.com/user-attachments/assets/36b0daac-1547-4e7c-a6ac-31d8a963d161)
+# Go to automatic settings and select the wireless or wifi adapter you are connected to and uncheck all other options
+![image](https://github.com/user-attachments/assets/20092713-896b-45e9-b52e-4eb3ed895cc1)
 
 
 ### Login to Jenkins using the below URL:
 
 http://<ec2-instance-public-ip-address>:8080    [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
-
+or http://<vm-ip-address>:8080
 Note: If you are not interested in allowing `All Traffic` to your EC2 instance
       1. Delete the inbound traffic rule for your instance
       2. Edit the inbound traffic rule to only allow custom TCP port `8080`
