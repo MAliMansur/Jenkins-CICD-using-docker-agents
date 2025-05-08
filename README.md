@@ -109,7 +109,7 @@ sudo ufw reload
 ### Login to Jenkins using the below URL:
 
 - http://<<"ec2-instance-public-ip-address">>:8080    [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
-- or http://<<vm-ip-address>>:8080 [You can get the vm-ip-address bu using command]
+- or http://<<"vm-ip-address">>:8080 [You can get the vm-ip-address bu using command]
 - ```
   ip a | grep inet
   ```
