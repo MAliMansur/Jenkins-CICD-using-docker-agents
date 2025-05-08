@@ -37,6 +37,7 @@ sudo apt-get install jenkins
 
 ```
 ### Run the below commands to install Jenkins and java if you are on a redhat or fedora machine
+```
 sudo yum update
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
@@ -44,11 +45,12 @@ sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 # Add required dependencies for the jenkins package
 sudo dnf install fontconfig java-21-openjdk 
 ```
-```
+
 # If you are on amazon linux machine, use the following command to install java
+```
  sudo amazon-linux-extras enable corretto11
  sudo yum install -y java-21-amazon-corretto
-
+```
 # Verify Java is Installed, make sure the version of java should be latest and compatible with jenkins.
 ```
 java -version
