@@ -54,32 +54,32 @@ sudo dnf install fontconfig java-21-openjdk
 # Verify Java is Installed, make sure the version of java should be latest and compatible with jenkins.
 ```
 java -version
-
 ```
 
 Now, you can proceed with installing Jenkins
 
 ```
 sudo dnf install jenkins
-
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
 # Check if the jenkins is running on port 8080 or anything other than jenkins running on port 8080
- sudo netstat -tulnp | grep 8080
 ```
+sudo netstat -tulnp | grep 8080
 ```
 # If there is some problem running the jenkins server, run the below commands
+```
  sudo systemctl daemon-reload
  sudo systemctl start jenkins
-
+```
  # To check the logs for jenkins, run the following commands
-  sudo cat /var/log/jenkins/jenkins.log
-   sudo systemctl status jenkins
-  ls /var/log/jenkins
-   sudo systemctl status jenkins -l
-
+ ```
+ sudo cat /var/log/jenkins/jenkins.log
+ sudo systemctl status jenkins
+ ls /var/log/jenkins
+ sudo systemctl status jenkins -l
+```
    
 # **Note: ** If you are on AWS By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
 
@@ -92,9 +92,10 @@ sudo systemctl status jenkins
 ```
 
 ### If you are on vmware or virtual machine, Jenkins will not be accessible to the external world due to the firewall restrictions of the port by the ubuntu os. Allow port 8080 in the firewall as show below.
+```
 sudo ufw allow 8080
 sudo ufw reload
-
+```
 # Also check the network connection is selected to bridged connection which you want to access the jenkins server from any browser other than the host
 # Also choose 
 
