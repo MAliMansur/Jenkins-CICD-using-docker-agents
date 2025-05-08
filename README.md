@@ -108,9 +108,12 @@ sudo ufw reload
 
 ### Login to Jenkins using the below URL:
 
-http://<ec2-instance-public-ip-address>:8080    [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
-or http://<vm-ip-address>:8080
-Note: If you are not interested in allowing `All Traffic` to your EC2 instance
+- http://<ec2-instance-public-ip-address>:8080    [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
+- or http://<<vm-ip-address>>:8080 [You can get the vm-ip-address bu using command]
+- ```
+  ip a | grep inet
+  ```
+- Note: If you are not interested in allowing `All Traffic` to your EC2 instance
       1. Delete the inbound traffic rule for your instance
       2. Edit the inbound traffic rule to only allow custom TCP port `8080`
   
