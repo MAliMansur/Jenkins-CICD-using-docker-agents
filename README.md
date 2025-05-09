@@ -159,6 +159,8 @@ If you want to use code from github, makesure you have git installed on system
 ```
 sudo apt install git
 ```
+![image](https://github.com/user-attachments/assets/520b5c02-8588-4df9-bdd4-53b4b60e4d18)
+
 ### Docker Slave Configuration
 
 Run the below command to Install Docker
