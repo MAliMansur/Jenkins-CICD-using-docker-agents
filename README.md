@@ -105,7 +105,10 @@ sudo ufw reload
 ### Go to automatic settings and select the wireless or wifi adapter you are connected to and uncheck all other options
 ![image](https://github.com/user-attachments/assets/20092713-896b-45e9-b52e-4eb3ed895cc1)
 
-
+### To see jenkins is running on the specific instance using port 8080:
+```
+ps -ef | grep jenkins
+```
 ### Login to Jenkins using the below URL:
 
 - http://<<"ec2-instance-public-ip-address">>:8080    [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
@@ -151,7 +154,11 @@ Jenkins Installation is Successful. You can now starting using the Jenkins
 
 Wait for the Jenkins to be restarted.
 
-
+### Git Installation on server
+If you want to use code from github, makesure you have git installed on system
+```
+sudo apt install git
+```
 ### Docker Slave Configuration
 
 Run the below command to Install Docker
@@ -178,6 +185,7 @@ http://<ec2-instance-public-ip>:8080/restart
 
 The docker agent configuration is now successful.
 
+![image](https://github.com/user-attachments/assets/f67f93fd-00d1-421e-8b80-b78106045103)
 
 
 
