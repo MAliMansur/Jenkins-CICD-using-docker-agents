@@ -159,6 +159,17 @@ If you want to use code from github, makesure you have git installed on system
 ```
 sudo apt install git
 ```
+### Review of the jenkins architecture
+- In the left side of the diagram, there is jenkins master, where the jenkins is right now installed.
+- So this ec2 instance or ubuntu vm that we are using can be considered as jenkins master.
+- What usually happens in an organization, let's say we are working for amazon.com. So there people create ec2 instance on jenkins master.
+- There are multiple developers and multiple project teams. So jenkins gets a lot of load to offload these things.
+- You should only use jenkins master only fot the scheduling purpose because all of the things cannot be run in a single jenkins master.
+- If everything runs on a single jenkins master, then it will have conflicting packages such as one team requires java version 7 and another team requires java version 8. Someone request python2 and someone request python3.
+-  It is technically not possible to have run everything on the jenkins master not good for the purpose of load and dependency conflicts.
+-  So what people do is they create jenkins master and they create jenkins worker nodes, like worker node 1 should be used by applications 1 to 10. worker node 2 or 3 should be used by a specific development team.
+-  With the advancement of kubernetes microservices architecture, the problem is that you have different types of application.
+-  Only if your applications are light in weight then this container approach will work. If they are heavy applications like database then thos container approach might not work. We have to configure worker nodes.
 ![image](https://github.com/user-attachments/assets/520b5c02-8588-4df9-bdd4-53b4b60e4d18)
 
 ### Docker Slave Configuration
@@ -188,6 +199,11 @@ http://<ec2-instance-public-ip>:8080/restart
 The docker agent configuration is now successful.
 
 ![image](https://github.com/user-attachments/assets/f67f93fd-00d1-421e-8b80-b78106045103)
+
+
+![image](https://github.com/user-attachments/assets/d603492c-da42-4d03-9e00-f42bf150aa35)
+
+![image](https://github.com/user-attachments/assets/bf96ed62-2ab5-4917-affc-86d7e5290c6f)
 
 
 
