@@ -170,6 +170,7 @@ sudo apt install git
 -  So what people do is they create jenkins master and they create jenkins worker nodes, like worker node 1 should be used by applications 1 to 10. worker node 2 or 3 should be used by a specific development team.
 -  With the advancement of kubernetes microservices architecture, the problem is that you have different types of application.
 -  Only if your applications are light in weight then this container approach will work. If they are heavy applications like database then thos container approach might not work. We have to configure worker nodes.
+  
 ![image](https://github.com/user-attachments/assets/520b5c02-8588-4df9-bdd4-53b4b60e4d18)
 
 ### Docker Slave Configuration
@@ -205,5 +206,77 @@ The docker agent configuration is now successful.
 
 ![image](https://github.com/user-attachments/assets/bf96ed62-2ab5-4917-affc-86d7e5290c6f)
 
+### If your Jenkins job is stuck waiting for an executor, which means no worker node is available to run the build. This can happen due to the following reasons:
+### Check Number of Executors
+- Go to Jenkins Dashboard → Manage Jenkins → Nodes and Clouds → Built-In Node
+- Check # of Executors (should be at least 1).
+- If it's 0, increase it to 1 and save.
+### Check if Jenkins is Running as a Slave (Agent Mode)
+- If you are using Jenkins agents, check whether they are connected and online.
+- Go to Jenkins Dashboard → Manage Jenkins → Nodes and Clouds
+- If all nodes are offline, restart them or reconfigure them.
+### Restart Jenkins
+Sometimes, a restart fixes the problem:
+- If you are using Jenkins agents, check whether they are connected and online.
+- Go to Jenkins Dashboard → Manage Jenkins → Nodes and Clouds
+- If all nodes are offline, restart them or reconfigure them.
+### Restart Jenkins
+Sometimes, a restart fixes the problem:
+```
+sudo systemctl restart jenkins
+```
+### Check Disk Space
+- Your /tmp partition was low on space earlier. If Jenkins is trying to use /tmp, it might be stuck:
+```
+df -h
+```
+### If /tmp is full, try:
+```
+sudo rm -rf /tmp/*
+```
+### If /tmp is full, try:
+```
+sudo journalctl -u jenkins --no-pager | tail -50
+```
+### To check the tmp space is less, you can also see on your terminal using this command:
+```
+df -h /tmp
+```
+### If you lost the jenkins password, you can temporary login to jenkins server by
+```
+sudo systemctl stop jenkins
+```
+- Edit Jenkins config (in /var/lib/jenkins/config.xml or wherever your Jenkins home is):
+```
+<useSecurity>true</useSecurity>
+```
+- Change it to:
+```
+<useSecurity>false</useSecurity>
+```
+- Restart Jenkins
+```
+sudo systemctl restart jenkins
+```
+### Using Groovy Script (for scripting or automation)
+If you’re automating Jenkins setup (e.g., in Docker or CI/CD), you can use a Groovy script from the Jenkins script console:
+
+Go to:
+
+Manage Jenkins → Script Console
+paste this
+```
+import jenkins.model.*
+import hudson.security.*
+
+def instance = Jenkins.getInstance()
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+
+hudsonRealm.createAccount("newuser", "password123")
+instance.setSecurityRealm(hudsonRealm)
+instance.save()
+
+```
+This creates a user newuser with password password123.
 
 
