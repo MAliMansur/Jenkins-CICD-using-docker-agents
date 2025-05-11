@@ -206,6 +206,67 @@ The docker agent configuration is now successful.
 
 ![image](https://github.com/user-attachments/assets/bf96ed62-2ab5-4917-affc-86d7e5290c6f)
 
+### Your Jenkins build is failing due to low temporary space (/tmp), which has only 470.27 MB available. To increase it to 2 GB, follow these steps:
+### Check Current /tmp Usage
+```
+df -h /tmp
+```
+This will show the total, used, and available space in /tmp
+### Identify If /tmp is a Separate Partition
+```
+mount | grep /tmp
+```
+- If /tmp is on a separate partition, you need to resize it.
+- If /tmp is using root (/) space, clearing files should help.
+- Free Up Space in /tmp
+### Delete unnecessary files:
+```
+sudo rm -rf /tmp/*
+```
+### Restart jenkins
+```
+sudo systemctl restart jenkins
+```
+### Check again
+```
+df -h /tmp
+```
+- Temporarily Increase /tmp Size (For Current Session)
+### If /tmp is mounted using tmpfs, remount it with more space:
+```
+sudo mount -o remount,size=2G /tmp
+```
+### Verify:
+```
+df -h /tmp
+```
+- Permanently Increase /tmp Size (Persistent After Reboot)
+### Edit /etc/fstab:
+```
+sudo nano /etc/fstab
+```
+### Find the line with /tmp and change it to:
+```
+tmpfs   /tmp   tmpfs   defaults,size=2G   0  0
+```
+### Save and exit, then reboot:
+```
+sudo reboot
+```
+### If /tmp is a Separate Partition (LVM)
+```
+sudo lvextend -L+2G /dev/your-tmp-lv
+sudo resize2fs /dev/your-tmp-lv
+```
+### Check the space:
+```
+df -h /tmp
+```
+### Restart Jenkins
+```
+sudo systemctl restart jenkins
+```
+
 ### If your Jenkins job is stuck waiting for an executor, which means no worker node is available to run the build. This can happen due to the following reasons:
 ### Check Number of Executors
 - Go to Jenkins Dashboard → Manage Jenkins → Nodes and Clouds → Built-In Node
@@ -217,16 +278,11 @@ The docker agent configuration is now successful.
 - If all nodes are offline, restart them or reconfigure them.
 ### Restart Jenkins
 Sometimes, a restart fixes the problem:
-- If you are using Jenkins agents, check whether they are connected and online.
-- Go to Jenkins Dashboard → Manage Jenkins → Nodes and Clouds
-- If all nodes are offline, restart them or reconfigure them.
-### Restart Jenkins
-Sometimes, a restart fixes the problem:
 ```
 sudo systemctl restart jenkins
 ```
 ### Check Disk Space
-- Your /tmp partition was low on space earlier. If Jenkins is trying to use /tmp, it might be stuck:
+Your /tmp partition was low on space earlier. If Jenkins is trying to use /tmp, it might be stuck:
 ```
 df -h
 ```
@@ -234,7 +290,7 @@ df -h
 ```
 sudo rm -rf /tmp/*
 ```
-### If /tmp is full, try:
+### Check jenkins logs:
 ```
 sudo journalctl -u jenkins --no-pager | tail -50
 ```
