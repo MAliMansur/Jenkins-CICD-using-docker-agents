@@ -334,7 +334,7 @@ instance.save()
 
 ```
 This creates a user newuser with password password123.
-### After creating user, in file /var/lib/jenkins, 
+### After creating user, you don't want to automatically login into jenkins server so, in file /var/lib/jenkins, 
 - REPLACE:
 ```
   <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
