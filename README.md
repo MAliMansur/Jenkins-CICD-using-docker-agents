@@ -233,8 +233,9 @@ df -h /tmp
 ```
 - Temporarily Increase /tmp Size (For Current Session)
 ### If /tmp is mounted using tmpfs, remount it with more space:
+- make sure to allocate space of minimum 3 to 4GB to temp folder
 ```
-sudo mount -o remount,size=2G /tmp
+sudo mount -o remount,size=4G /tmp
 ```
 ### Verify:
 ```
@@ -247,7 +248,7 @@ sudo nano /etc/fstab
 ```
 ### Find the line with /tmp and change it to:
 ```
-tmpfs   /tmp   tmpfs   defaults,size=2G   0  0
+tmpfs   /tmp   tmpfs   defaults,size=4G   0  0
 ```
 ### Save and exit, then reboot:
 ```
@@ -255,7 +256,7 @@ sudo reboot
 ```
 ### If /tmp is a Separate Partition (LVM)
 ```
-sudo lvextend -L+2G /dev/your-tmp-lv
+sudo lvextend -L+4G /dev/your-tmp-lv
 sudo resize2fs /dev/your-tmp-lv
 ```
 ### Check the space:
