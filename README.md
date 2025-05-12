@@ -267,6 +267,9 @@ df -h /tmp
 ```
 sudo systemctl restart jenkins
 ```
+- you will the see the window like this
+  
+![image](https://github.com/user-attachments/assets/dd9bc1ff-1b11-41b0-aca7-4b6b25a8ba67)
 
 ### If your Jenkins job is stuck waiting for an executor, which means no worker node is available to run the build. This can happen due to the following reasons:
 ### Check Number of Executors
