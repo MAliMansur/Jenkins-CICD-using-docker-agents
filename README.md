@@ -298,6 +298,13 @@ sudo journalctl -u jenkins --no-pager | tail -50
 ```
 df -h /tmp
 ```
+
+### To diagnose jenkins, you can also go to the foloowing path on jenkins dashboard.
+- Manage Jenkins → System Information: Check memory, thread count, heap usage.
+- Manage Jenkins → Load Statistics: Shows queue and executor usage over time.
+- Thread Dump: Can show what Jenkins is “stuck” on (Manage Jenkins → Thread Dump).
+- Also check your jenkins and java version is not outdated.
+  
 ### If you lost the jenkins password, you can temporary login to jenkins server by
 ```
 sudo systemctl stop jenkins
