@@ -334,5 +334,27 @@ instance.save()
 
 ```
 This creates a user newuser with password password123.
+### After creating user, in file /var/lib/jenkins, 
+- REPLACE:
+```
+  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+  <securityRealm class="hudson.security.SecurityRealm$None"/>
+```
+- WITH:
+```
+<securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+  <disableSignup>true</disableSignup>
+  <enableCaptcha>false</enableCaptcha>
+</securityRealm>
 
+<authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
+  <denyAnonymousReadAccess>true</denyAnonymousReadAccess>
+</authorizationStrategy>
+
+```
+- Then Restart Jenkins:
+```
+sudo systemctl restart jenkins
+
+```
 
